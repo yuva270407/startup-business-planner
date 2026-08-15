@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Startup Business Planner</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+<nav class="navbar">
+
+    <div class="logo">
+        🚀 Startup Planner
+    </div>
+
+    <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="#planner">Create Plan</a>
+        <a href="dashboard.html">My Plans</a>
+    </div>
+
+</nav>
+    <header>
+        <h1>Startup Business Planner</h1>
+        <p>Plan your startup with AI-powered business insights</p>
+    </header>
+<section class="features">
+
+    <div class="section-title">
+        <span>POWERFUL FEATURES</span>
+        <h2>Everything You Need to Plan Your Startup</h2>
+        <p>
+            Simple AI-powered tools to turn your idea into a practical business plan.
+        </p>
+    </div>
+
+    <div class="feature-grid">
+
+        <div class="feature-card">
+            <div class="feature-icon">🤖</div>
+            <h3>AI Business Analysis</h3>
+            <p>
+                Analyze your startup idea and receive useful business insights.
+            </p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">📊</div>
+            <h3>SWOT Analysis</h3>
+            <p>
+                Identify strengths, weaknesses, opportunities and threats.
+            </p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">💰</div>
+            <h3>Budget Planning</h3>
+            <p>
+                Understand your available budget and estimated business expenses.
+            </p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">🚀</div>
+            <h3>Growth Strategy</h3>
+            <p>
+                Get practical strategies to grow your startup successfully.
+            </p>
+        </div>
+
+    </div>
+
+</section>
+    <main>
+
+        <section class="hero">
+
+    <div class="hero-content">
+
+        <div class="hero-badge">
+            ✨ AI-Powered Startup Planning
+        </div>
+
+        <h2>
+            Turn Your <span>Startup Idea</span>
+            Into a Business Plan
+        </h2>
+
+        <p>
+            Create smarter business plans with AI-powered
+            market insights, strategies, budget analysis,
+            and SWOT analysis.
+        </p>
+
+        <div class="hero-buttons">
+
+            <a href="#planner" class="start-btn">
+                🚀 Start Planning
+            </a>
+
+            <a href="dashboard.html" class="view-btn">
+                📊 My Plans
+            </a>
+
+        </div>
+
+    </div>
+
+    <div class="hero-card">
+
+        <div class="floating-icon">💡</div>
+
+        <h3>Smart Business Analysis</h3>
+
+        <p>
+            AI analyzes your startup idea and generates
+            a practical business strategy.
+        </p>
+
+        <div class="mini-stats">
+
+            <div>
+                <strong>AI</strong>
+                <span>Analysis</span>
+            </div>
+
+            <div>
+                <strong>SWOT</strong>
+                <span>Analysis</span>
+            </div>
+
+            <div>
+                <strong>Plan</strong>
+                <span>Generator</span>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+        <section id="planner" class="planner">
+
+            <h2>Startup Details</h2>
+
+            <form id="businessForm">
+
+                <label for="startupName">
+                    Startup Name
+                </label>
+
+                <input
+                    type="text"
+                    id="startupName"
+                    placeholder="Enter startup name"
+                    required
+                >
+
+                <label for="idea">
+                    Business Idea
+                </label>
+
+                <textarea
+                    id="idea"
+                    placeholder="Describe your business idea"
+                    required
+                ></textarea>
+
+                <label for="category">
+                    Business Category
+                </label>
+
+                <select id="category" required>
+                    <option value="">Select Category</option>
+                    <option value="Technology">Technology</option>
+                    <option value="Education">Education</option>
+                    <option value="Healthcare">Healthcare</option>
+                    <option value="Food">Food</option>
+                    <option value="E-Commerce">E-Commerce</option>
+                    <option value="Finance">Finance</option>
+                    <option value="Other">Other</option>
+                </select>
+
+                <label for="budget">
+                    Available Budget
+                </label>
+
+                <input
+                    type="number"
+                    id="budget"
+                    placeholder="Enter budget"
+                    required
+                >
+
+                <label for="customers">
+                    Target Customers
+                </label>
+
+                <input
+                    type="text"
+                    id="customers"
+                    placeholder="Example: College students"
+                    required
+                >
+
+                <button type="submit">
+                    Generate Business Plan
+                </button>
+
+            </form>
+
+            <div id="result"></div>
+
+        </section>
+
+    </main>
+
+    <footer>
+        <p>© 2026 Startup Business Planner</p>
+    </footer>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
