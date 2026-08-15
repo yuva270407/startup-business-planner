@@ -4,8 +4,7 @@ async function loadPlans() {
 
     try {
 
-        const response = await fetch(
-            "http://localhost:5000/api/business-plans"
+        const response = await fetch("/api/business-plans")
         );
 
         const plans = await response.json();

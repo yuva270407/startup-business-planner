@@ -30,7 +30,7 @@ businessForm.addEventListener("submit", async function (event) {
 `;
 
     try {
-        const response = await fetch("http://localhost:5000/api/business-plan", {
+        const response = await fetch("/api/business-plan", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
