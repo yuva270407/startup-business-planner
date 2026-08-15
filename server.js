@@ -1,6 +1,6 @@
 const { DatabaseSync } = require("node:sqlite");
 const db = new DatabaseSync("startup_business_planner.db");
-
+const path = require("path");
 db.exec(`
     CREATE TABLE IF NOT EXISTS business_plans (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -22,10 +22,12 @@ require("dotenv").config();
 const { GoogleGenAI } = require("@google/genai");
 
 const app = express();
-
+app.use(express.static(path.join(__dirname, "frontend")));
 app.use(cors());
 app.use(express.json());
-
+app.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname, "frontend", "index.html"));
+});
 const ai = new GoogleGenAI({
     apiKey: process.env.GEMINI_API_KEY
 });
