@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sales Management | Startup Planner</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #eef5ff, #f8fbff);
+            color: #1e293b;
+        }
+
+        .navbar {
+            background: white;
+            padding: 18px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
+            animation: navDown 0.6s ease;
+        }
+
+        .logo {
+            font-size: 21px;
+            font-weight: bold;
+            color: #2563eb;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 22px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #475569;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #2563eb;
+            transform: translateY(-2px);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            padding: 45px 20px;
+        }
+
+        .heading {
+            text-align: center;
+            margin-bottom: 35px;
+            animation: fadeUp 0.7s ease;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #dcfce7;
+            color: #16a34a;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+
+        .heading h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .heading p {
+            color: #64748b;
+        }
+
+        .summary {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .summary-card {
+            background: white;
+            padding: 25px;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.07);
+            transition: 0.3s;
+            animation: fadeUp 0.8s ease;
+        }
+
+        .summary-card:hover {
+            transform: translateY(-7px);
+        }
+
+        .summary-icon {
+            font-size: 32px;
+        }
+
+        .summary-card h2 {
+            margin: 10px 0;
+            color: #16a34a;
+        }
+
+        .summary-card p {
+            color: #64748b;
+        }
+
+        .form-card {
+            background: white;
+            padding: 28px;
+            border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.07);
+            margin-bottom: 25px;
+            animation: fadeUp 0.9s ease;
+        }
+
+        .form-card h2 {
+            margin-bottom: 20px;
+        }
+
+        .form {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr auto;
+            gap: 12px;
+        }
+
+        .form input,
+        .form select {
+            padding: 13px;
+            border: 1px solid #dbe3ef;
+            border-radius: 8px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .form input:focus,
+        .form select:focus {
+            border-color: #16a34a;
+            transform: translateY(-2px);
+        }
+
+        .add-btn {
+            border: none;
+            border-radius: 8px;
+            background: #16a34a;
+            color: white;
+            padding: 13px 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .add-btn:hover {
+            transform: translateY(-3px);
+        }
+
+        .add-btn:active {
+            transform: scale(0.95);
+        }
+
+        .sales-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .sale-card {
+            background: white;
+            padding: 18px 20px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 5px 18px rgba(0, 0, 0, 0.06);
+            animation: cardAppear 0.5s ease;
+            transition: 0.3s;
+        }
+
+        .sale-card:hover {
+            transform: translateX(6px);
+        }
+
+        .sale-icon {
+            font-size: 30px;
+        }
+
+        .sale-info {
+            flex: 1;
+        }
+
+        .sale-info h3 {
+            margin-bottom: 5px;
+        }
+
+        .sale-info p {
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .sale-amount {
+            font-weight: bold;
+            color: #16a34a;
+            font-size: 18px;
+        }
+
+        .delete-btn {
+            border: none;
+            background: #fee2e2;
+            color: #dc2626;
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .delete-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .empty {
+            text-align: center;
+            padding: 40px;
+            color: #64748b;
+            background: white;
+            border-radius: 12px;
+        }
+
+        @keyframes navDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(25px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes cardAppear {
+            from {
+                opacity: 0;
+                transform: translateY(15px) scale(0.98);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @media (max-width: 750px) {
+
+            .navbar {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .heading h1 {
+                font-size: 30px;
+            }
+
+            .summary {
+                grid-template-columns: 1fr;
+            }
+
+            .form {
+                grid-template-columns: 1fr;
+            }
+
+            .sale-card {
+                flex-wrap: wrap;
+            }
+
+            .sale-amount {
+                margin-left: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar">
+
+        <div class="logo">
+            🚀 Startup Planner
+        </div>
+
+        <div class="nav-links">
+            <a href="dashboard.html">Dashboard</a>
+            <a href="customers.html">Customers</a>
+            <a href="expenses.html">Expenses</a>
+            <a href="sales.html">Sales</a>
+            <a href="index.html">Home</a>
+        </div>
+
+    </nav>
+
+    <main class="container">
+
+        <div class="heading">
+
+            <span class="badge">
+                💰 BUSINESS SALES
+            </span>
+
+            <h1>Sales Management</h1>
+
+            <p>
+                Track your business sales quickly and easily.
+            </p>
+
+        </div>
+
+        <section class="summary">
+
+            <div class="summary-card">
+
+                <div class="summary-icon">
+                    💰
+                </div>
+
+                <h2 id="totalSales">
+                    ₹0
+                </h2>
+
+                <p>
+                    Total Sales
+                </p>
+
+            </div>
+
+            <div class="summary-card">
+
+                <div class="summary-icon">
+                    🧾
+                </div>
+
+                <h2 id="salesCount">
+                    0
+                </h2>
+
+                <p>
+                    Total Sales Entries
+                </p>
+
+            </div>
+
+        </section>
+
+        <section class="form-card">
+
+            <h2>
+                ➕ Add New Sale
+            </h2>
+
+            <div class="form">
+
+                <input
+                    type="text"
+                    id="productName"
+                    placeholder="Product / Service"
+                >
+
+                <input
+                    type="number"
+                    id="saleAmount"
+                    placeholder="Amount ₹"
+                >
+
+                <input
+                    type="text"
+                    id="customerName"
+                    placeholder="Customer Name"
+                >
+
+                <button
+                    class="add-btn"
+                    onclick="addSale()"
+                >
+                    Add Sale
+                </button>
+
+            </div>
+
+        </section>
+
+        <section id="salesList" class="sales-list"></section>
+
+    </main>
+
+    <script>
+
+        function getSales() {
+
+            return JSON.parse(
+                localStorage.getItem("sales")
+            ) || [];
+
+        }
+
+
+        function saveSales(sales) {
+
+            localStorage.setItem(
+                "sales",
+                JSON.stringify(sales)
+            );
+
+        }
+
+
+        function addSale() {
+
+            const product =
+                document.getElementById("productName").value.trim();
+
+            const amount =
+                Number(
+                    document.getElementById("saleAmount").value
+                );
+
+            const customer =
+                document.getElementById("customerName").value.trim();
+
+
+            if (!product || amount <= 0 || !customer) {
+
+                alert("Please enter all sales details.");
+
+                return;
+
+            }
+
+
+            const sales = getSales();
+
+
+            sales.push({
+
+                id: Date.now(),
+
+                product: product,
+
+                amount: amount,
+
+                customer: customer,
+
+                date: new Date().toLocaleDateString()
+
+            });
+
+
+            saveSales(sales);
+
+
+            document.getElementById("productName").value = "";
+
+            document.getElementById("saleAmount").value = "";
+
+            document.getElementById("customerName").value = "";
+
+
+            displaySales();
+
+        }
+
+
+        function deleteSale(id) {
+
+            const sales = getSales();
+
+            const updatedSales =
+                sales.filter(sale => sale.id !== id);
+
+            saveSales(updatedSales);
+
+            displaySales();
+
+        }
+
+
+        function displaySales() {
+
+            const sales = getSales();
+
+            const list =
+                document.getElementById("salesList");
+
+
+            list.innerHTML = "";
+
+
+            let total = 0;
+
+
+            sales.forEach(sale => {
+
+                total += Number(sale.amount);
+
+
+                const card =
+                    document.createElement("div");
+
+                card.className = "sale-card";
+
+
+                card.innerHTML = `
+
+                    <div class="sale-icon">
+                        💰
+                    </div>
+
+                    <div class="sale-info">
+
+                        <h3>
+                            ${sale.product}
+                        </h3>
+
+                        <p>
+                            👤 ${sale.customer}
+                            &nbsp; • &nbsp;
+                            📅 ${sale.date}
+                        </p>
+
+                    </div>
+
+                    <div class="sale-amount">
+                        ₹${sale.amount}
+                    </div>
+
+                    <button
+                        class="delete-btn"
+                        onclick="deleteSale(${sale.id})"
+                    >
+                        🗑️
+                    </button>
+
+                `;
+
+
+                list.appendChild(card);
+
+            });
+
+
+            document.getElementById(
+                "totalSales"
+            ).textContent = "₹" + total;
+
+
+            document.getElementById(
+                "salesCount"
+            ).textContent = sales.length;
+
+
+            if (sales.length === 0) {
+
+                list.innerHTML = `
+
+                    <div class="empty">
+
+                        💰 No sales added yet.
+
+                        <br><br>
+
+                        Add your first sale above.
+
+                    </div>
+
+                `;
+
+            }
+
+        }
+
+
+        displaySales();
+
+    </script>
+
+</body>
+
+</html>

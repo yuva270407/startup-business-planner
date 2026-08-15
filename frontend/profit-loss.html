@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Profit & Loss | Startup Planner</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #eef5ff, #f8fbff);
+            color: #1e293b;
+        }
+
+        .navbar {
+            background: white;
+            padding: 18px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+            animation: slideDown 0.6s ease;
+        }
+
+        .logo {
+            font-size: 21px;
+            font-weight: bold;
+            color: #2563eb;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #475569;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #2563eb;
+            transform: translateY(-2px);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            padding: 45px 20px;
+        }
+
+        .heading {
+            text-align: center;
+            margin-bottom: 35px;
+            animation: fadeUp 0.7s ease;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #ede9fe;
+            color: #7c3aed;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+
+        .heading h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .heading p {
+            color: #64748b;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: white;
+            padding: 28px;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.07);
+            animation: fadeUp 0.8s ease;
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-7px);
+        }
+
+        .icon {
+            font-size: 32px;
+        }
+
+        .card h2 {
+            margin: 12px 0 7px;
+            font-size: 26px;
+        }
+
+        .card p {
+            color: #64748b;
+        }
+
+        .sales h2 {
+            color: #16a34a;
+        }
+
+        .expenses h2 {
+            color: #dc2626;
+        }
+
+        .profit h2 {
+            color: #2563eb;
+        }
+
+        .calculation {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.07);
+            animation: fadeUp 1s ease;
+        }
+
+        .calculation h2 {
+            margin-bottom: 20px;
+        }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            padding: 16px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .final {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            background: #eff6ff;
+        }
+
+        .final h2 {
+            color: #2563eb;
+            margin-bottom: 5px;
+        }
+
+        .message {
+            text-align: center;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(25px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 750px) {
+
+            .navbar {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            .heading h1 {
+                font-size: 30px;
+            }
+
+            .row {
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar">
+
+        <div class="logo">
+            🚀 Startup Planner
+        </div>
+
+        <div class="nav-links">
+            <a href="dashboard.html">Dashboard</a>
+            <a href="customers.html">Customers</a>
+            <a href="sales.html">Sales</a>
+            <a href="expenses.html">Expenses</a>
+            <a href="profit-loss.html">Profit & Loss</a>
+            <a href="index.html">Home</a>
+        </div>
+
+    </nav>
+
+
+    <main class="container">
+
+        <div class="heading">
+
+            <span class="badge">
+                📊 BUSINESS ANALYSIS
+            </span>
+
+            <h1>Profit & Loss</h1>
+
+            <p>
+                Understand your business performance instantly.
+            </p>
+
+        </div>
+
+
+        <section class="cards">
+
+            <div class="card sales">
+
+                <div class="icon">💰</div>
+
+                <h2 id="totalSales">
+                    ₹0
+                </h2>
+
+                <p>
+                    Total Sales
+                </p>
+
+            </div>
+
+
+            <div class="card expenses">
+
+                <div class="icon">💸</div>
+
+                <h2 id="totalExpenses">
+                    ₹0
+                </h2>
+
+                <p>
+                    Total Expenses
+                </p>
+
+            </div>
+
+
+            <div class="card profit">
+
+                <div class="icon">📈</div>
+
+                <h2 id="profitAmount">
+                    ₹0
+                </h2>
+
+                <p>
+                    Net Profit / Loss
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <section class="calculation">
+
+            <h2>
+                🧮 Financial Summary
+            </h2>
+
+            <div class="row">
+
+                <span>
+                    Total Sales
+                </span>
+
+                <strong id="summarySales">
+                    ₹0
+                </strong>
+
+            </div>
+
+
+            <div class="row">
+
+                <span>
+                    Total Expenses
+                </span>
+
+                <strong id="summaryExpenses">
+                    ₹0
+                </strong>
+
+            </div>
+
+
+            <div class="final">
+
+                <h2 id="finalAmount">
+                    ₹0
+                </h2>
+
+                <p id="finalMessage">
+                    No sales or expenses recorded yet.
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <script>
+
+        function getData(key) {
+
+            return JSON.parse(
+                localStorage.getItem(key)
+            ) || [];
+
+        }
+
+
+        function calculateProfitLoss() {
+
+            const sales = getData("sales");
+
+            const expenses = getData("expenses");
+
+
+            let totalSales = 0;
+
+            let totalExpenses = 0;
+
+
+            sales.forEach(sale => {
+
+                totalSales += Number(sale.amount);
+
+            });
+
+
+            expenses.forEach(expense => {
+
+                totalExpenses += Number(expense.amount);
+
+            });
+
+
+            const profit =
+                totalSales - totalExpenses;
+
+
+            document.getElementById(
+                "totalSales"
+            ).textContent = "₹" + totalSales;
+
+
+            document.getElementById(
+                "totalExpenses"
+            ).textContent = "₹" + totalExpenses;
+
+
+            document.getElementById(
+                "profitAmount"
+            ).textContent =
+                "₹" + Math.abs(profit);
+
+
+            document.getElementById(
+                "summarySales"
+            ).textContent = "₹" + totalSales;
+
+
+            document.getElementById(
+                "summaryExpenses"
+            ).textContent = "₹" + totalExpenses;
+
+
+            document.getElementById(
+                "finalAmount"
+            ).textContent =
+                "₹" + Math.abs(profit);
+
+
+            const message =
+                document.getElementById("finalMessage");
+
+
+            if (profit > 0) {
+
+                message.textContent =
+                    "🎉 Your business is currently in Profit.";
+
+            } else if (profit < 0) {
+
+                message.textContent =
+                    "⚠️ Your business is currently in Loss.";
+
+            } else {
+
+                message.textContent =
+                    "No profit or loss recorded yet.";
+
+            }
+
+        }
+
+
+        calculateProfitLoss();
+
+    </script>
+
+</body>
+
+</html>

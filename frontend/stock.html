@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Stock Management | Startup Planner</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #eef5ff, #f8fbff);
+            color: #1e293b;
+        }
+
+        .navbar {
+            background: white;
+            padding: 18px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
+            animation: slideDown 0.6s ease;
+        }
+
+        .logo {
+            font-size: 21px;
+            font-weight: bold;
+            color: #2563eb;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #475569;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #2563eb;
+            transform: translateY(-2px);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            padding: 45px 20px;
+        }
+
+        .heading {
+            text-align: center;
+            margin-bottom: 35px;
+            animation: fadeUp 0.7s ease;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #fef3c7;
+            color: #d97706;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+
+        .heading h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .heading p {
+            color: #64748b;
+        }
+
+        .summary {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .summary-card {
+            background: white;
+            padding: 25px;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.07);
+            animation: fadeUp 0.8s ease;
+            transition: 0.3s;
+        }
+
+        .summary-card:hover {
+            transform: translateY(-7px);
+        }
+
+        .summary-icon {
+            font-size: 30px;
+        }
+
+        .summary-card h2 {
+            margin: 10px 0 5px;
+            color: #2563eb;
+        }
+
+        .summary-card p {
+            color: #64748b;
+        }
+
+        .form-card {
+            background: white;
+            padding: 28px;
+            border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.07);
+            margin-bottom: 25px;
+            animation: fadeUp 0.9s ease;
+        }
+
+        .form-card h2 {
+            margin-bottom: 20px;
+        }
+
+        .form {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr auto;
+            gap: 12px;
+        }
+
+        .form input {
+            padding: 13px;
+            border: 1px solid #dbe3ef;
+            border-radius: 8px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .form input:focus {
+            border-color: #2563eb;
+            transform: translateY(-2px);
+        }
+
+        .add-btn {
+            border: none;
+            border-radius: 8px;
+            background: #2563eb;
+            color: white;
+            padding: 13px 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .add-btn:hover {
+            transform: translateY(-3px);
+        }
+
+        .stock-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .stock-card {
+            background: white;
+            padding: 18px 20px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 5px 18px rgba(0, 0, 0, 0.06);
+            animation: cardAppear 0.5s ease;
+            transition: 0.3s;
+        }
+
+        .stock-card:hover {
+            transform: translateX(6px);
+        }
+
+        .stock-icon {
+            font-size: 30px;
+        }
+
+        .stock-info {
+            flex: 1;
+        }
+
+        .stock-info h3 {
+            margin-bottom: 5px;
+        }
+
+        .stock-info p {
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .stock-count {
+            font-size: 20px;
+            font-weight: bold;
+            color: #2563eb;
+        }
+
+        .low-stock {
+            border-left: 5px solid #dc2626;
+            background: #fff7f7;
+        }
+
+        .alert {
+            display: inline-block;
+            margin-top: 6px;
+            padding: 5px 9px;
+            border-radius: 15px;
+            background: #fee2e2;
+            color: #dc2626;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .delete-btn {
+            border: none;
+            background: #fee2e2;
+            color: #dc2626;
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .delete-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .empty {
+            text-align: center;
+            padding: 40px;
+            color: #64748b;
+            background: white;
+            border-radius: 12px;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(25px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes cardAppear {
+            from {
+                opacity: 0;
+                transform: translateY(15px) scale(0.98);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @media (max-width: 750px) {
+
+            .navbar {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .summary {
+                grid-template-columns: 1fr;
+            }
+
+            .form {
+                grid-template-columns: 1fr;
+            }
+
+            .stock-card {
+                flex-wrap: wrap;
+            }
+
+            .stock-count {
+                margin-left: auto;
+            }
+
+            .heading h1 {
+                font-size: 30px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar">
+
+        <div class="logo">
+            🚀 Startup Planner
+        </div>
+
+        <div class="nav-links">
+            <a href="dashboard.html">Dashboard</a>
+            <a href="customers.html">Customers</a>
+            <a href="sales.html">Sales</a>
+            <a href="expenses.html">Expenses</a>
+            <a href="profit-loss.html">Profit & Loss</a>
+            <a href="stock.html">Stock</a>
+            <a href="index.html">Home</a>
+        </div>
+
+    </nav>
+
+
+    <main class="container">
+
+        <div class="heading">
+
+            <span class="badge">
+                📦 INVENTORY MANAGEMENT
+            </span>
+
+            <h1>Stock Management</h1>
+
+            <p>
+                Manage your products and monitor low stock easily.
+            </p>
+
+        </div>
+
+
+        <section class="summary">
+
+            <div class="summary-card">
+
+                <div class="summary-icon">📦</div>
+
+                <h2 id="totalProducts">0</h2>
+
+                <p>Total Products</p>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <div class="summary-icon">🔢</div>
+
+                <h2 id="totalQuantity">0</h2>
+
+                <p>Total Stock</p>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <div class="summary-icon">⚠️</div>
+
+                <h2 id="lowStockCount">0</h2>
+
+                <p>Low Stock Items</p>
+
+            </div>
+
+        </section>
+
+
+        <section class="form-card">
+
+            <h2>➕ Add Product</h2>
+
+            <div class="form">
+
+                <input
+                    type="text"
+                    id="productName"
+                    placeholder="Product Name"
+                >
+
+                <input
+                    type="number"
+                    id="productQuantity"
+                    placeholder="Quantity"
+                >
+
+                <input
+                    type="number"
+                    id="minimumStock"
+                    placeholder="Minimum Stock"
+                >
+
+                <button
+                    class="add-btn"
+                    onclick="addProduct()"
+                >
+                    Add
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <section
+            id="stockList"
+            class="stock-list"
+        ></section>
+
+    </main>
+
+
+    <script>
+
+        function getStock() {
+
+            return JSON.parse(
+                localStorage.getItem("stock")
+            ) || [];
+
+        }
+
+
+        function saveStock(stock) {
+
+            localStorage.setItem(
+                "stock",
+                JSON.stringify(stock)
+            );
+
+        }
+
+
+        function addProduct() {
+
+            const name =
+                document.getElementById("productName")
+                    .value.trim();
+
+            const quantity =
+                Number(
+                    document.getElementById("productQuantity")
+                        .value
+                );
+
+            const minimum =
+                Number(
+                    document.getElementById("minimumStock")
+                        .value
+                );
+
+
+            if (!name || quantity < 0 || minimum < 0) {
+
+                alert("Please enter all stock details.");
+
+                return;
+
+            }
+
+
+            const stock = getStock();
+
+
+            stock.push({
+
+                id: Date.now(),
+
+                name: name,
+
+                quantity: quantity,
+
+                minimum: minimum
+
+            });
+
+
+            saveStock(stock);
+
+
+            document.getElementById("productName").value = "";
+
+            document.getElementById("productQuantity").value = "";
+
+            document.getElementById("minimumStock").value = "";
+
+
+            displayStock();
+
+        }
+
+
+        function deleteProduct(id) {
+
+            const stock = getStock();
+
+            const updatedStock =
+                stock.filter(product => product.id !== id);
+
+            saveStock(updatedStock);
+
+            displayStock();
+
+        }
+
+
+        function displayStock() {
+
+            const stock = getStock();
+
+            const list =
+                document.getElementById("stockList");
+
+
+            list.innerHTML = "";
+
+
+            let totalQuantity = 0;
+
+            let lowStock = 0;
+
+
+            stock.forEach(product => {
+
+                totalQuantity += Number(product.quantity);
+
+
+                const isLow =
+                    product.quantity <= product.minimum;
+
+
+                if (isLow) {
+                    lowStock++;
+                }
+
+
+                const card =
+                    document.createElement("div");
+
+
+                card.className =
+                    "stock-card" +
+                    (isLow ? " low-stock" : "");
+
+
+                card.innerHTML = `
+
+                    <div class="stock-icon">
+                        ${isLow ? "⚠️" : "📦"}
+                    </div>
+
+                    <div class="stock-info">
+
+                        <h3>
+                            ${product.name}
+                        </h3>
+
+                        <p>
+                            Minimum stock:
+                            ${product.minimum}
+                        </p>
+
+                        ${
+                            isLow
+                            ? `<span class="alert">
+                                ⚠️ Low Stock - Reorder
+                               </span>`
+                            : ""
+                        }
+
+                    </div>
+
+                    <div class="stock-count">
+                        ${product.quantity}
+                    </div>
+
+                    <button
+                        class="delete-btn"
+                        onclick="deleteProduct(${product.id})"
+                    >
+                        🗑️
+                    </button>
+
+                `;
+
+
+                list.appendChild(card);
+
+            });
+
+
+            document.getElementById(
+                "totalProducts"
+            ).textContent = stock.length;
+
+
+            document.getElementById(
+                "totalQuantity"
+            ).textContent = totalQuantity;
+
+
+            document.getElementById(
+                "lowStockCount"
+            ).textContent = lowStock;
+
+
+            if (stock.length === 0) {
+
+                list.innerHTML = `
+
+                    <div class="empty">
+
+                        📦 No products added yet.
+
+                        <br><br>
+
+                        Add your first product above.
+
+                    </div>
+
+                `;
+
+            }
+
+        }
+
+
+        displayStock();
+
+    </script>
+
+</body>
+
+</html>

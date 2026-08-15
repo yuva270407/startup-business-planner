@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Business Calculator | Startup Planner</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #eef5ff, #f8fbff);
+            color: #1e293b;
+        }
+
+        .navbar {
+            background: white;
+            padding: 18px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
+            animation: slideDown 0.6s ease;
+        }
+
+        .logo {
+            font-size: 21px;
+            font-weight: bold;
+            color: #2563eb;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #475569;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #2563eb;
+        }
+
+        .container {
+            max-width: 950px;
+            margin: auto;
+            padding: 45px 20px;
+        }
+
+        .heading {
+            text-align: center;
+            margin-bottom: 30px;
+            animation: fadeUp 0.7s ease;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #dbeafe;
+            color: #2563eb;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+
+        .heading h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .heading p {
+            color: #64748b;
+        }
+
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        .calculator-card {
+            background: white;
+            padding: 25px;
+            border-radius: 18px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.07);
+            animation: fadeUp 0.8s ease;
+            transition: 0.3s;
+        }
+
+        .calculator-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .calculator-card h2 {
+            margin-bottom: 20px;
+        }
+
+        .display {
+            width: 100%;
+            height: 65px;
+            border: none;
+            border-radius: 10px;
+            background: #f1f5f9;
+            padding: 15px;
+            font-size: 28px;
+            text-align: right;
+            margin-bottom: 15px;
+            color: #1e293b;
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+        }
+
+        .buttons button {
+            height: 55px;
+            border: none;
+            border-radius: 10px;
+            background: #e2e8f0;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .buttons button:hover {
+            transform: translateY(-2px);
+            background: #cbd5e1;
+        }
+
+        .buttons button:active {
+            transform: scale(0.94);
+        }
+
+        .operator {
+            background: #dbeafe !important;
+            color: #2563eb;
+        }
+
+        .equal {
+            background: #2563eb !important;
+            color: white;
+        }
+
+        .clear {
+            background: #fee2e2 !important;
+            color: #dc2626;
+        }
+
+        .business-form {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .business-form input {
+            padding: 14px;
+            border: 1px solid #dbe3ef;
+            border-radius: 9px;
+            outline: none;
+            font-size: 15px;
+            transition: 0.3s;
+        }
+
+        .business-form input:focus {
+            border-color: #2563eb;
+            transform: translateY(-2px);
+        }
+
+        .calculate-btn {
+            border: none;
+            padding: 14px;
+            border-radius: 9px;
+            background: #16a34a;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .calculate-btn:hover {
+            transform: translateY(-3px);
+        }
+
+        .result {
+            margin-top: 18px;
+            padding: 20px;
+            background: #f0fdf4;
+            border-radius: 12px;
+            text-align: center;
+            animation: resultAppear 0.4s ease;
+        }
+
+        .result h3 {
+            color: #16a34a;
+            font-size: 28px;
+            margin-bottom: 7px;
+        }
+
+        .percentage-result {
+            margin-top: 12px;
+            padding: 15px;
+            background: #eff6ff;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .percentage-result strong {
+            color: #2563eb;
+            font-size: 22px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(25px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes resultAppear {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @media (max-width: 750px) {
+
+            .navbar {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .calculator-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .heading h1 {
+                font-size: 30px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar">
+
+        <div class="logo">
+            🚀 Startup Planner
+        </div>
+
+        <div class="nav-links">
+            <a href="dashboard.html">Dashboard</a>
+            <a href="sales.html">Sales</a>
+            <a href="expenses.html">Expenses</a>
+            <a href="profit-loss.html">Profit & Loss</a>
+            <a href="stock.html">Stock</a>
+            <a href="schedule.html">Schedule</a>
+            <a href="calculator.html">Calculator</a>
+            <a href="index.html">Home</a>
+        </div>
+
+    </nav>
+
+
+    <main class="container">
+
+        <div class="heading">
+
+            <span class="badge">
+                🧮 SMART BUSINESS TOOL
+            </span>
+
+            <h1>Business Calculator</h1>
+
+            <p>
+                Calculate numbers and business profit quickly.
+            </p>
+
+        </div>
+
+
+        <section class="calculator-grid">
+
+            <!-- Basic Calculator -->
+
+            <div class="calculator-card">
+
+                <h2>🧮 Calculator</h2>
+
+                <input
+                    type="text"
+                    id="display"
+                    class="display"
+                    value="0"
+                    readonly
+                >
+
+                <div class="buttons">
+
+                    <button
+                        class="clear"
+                        onclick="clearCalculator()"
+                    >
+                        C
+                    </button>
+
+                    <button onclick="press('%')">
+                        %
+                    </button>
+
+                    <button onclick="backspace()">
+                        ⌫
+                    </button>
+
+                    <button
+                        class="operator"
+                        onclick="press('/')"
+                    >
+                        ÷
+                    </button>
+
+
+                    <button onclick="press('7')">
+                        7
+                    </button>
+
+                    <button onclick="press('8')">
+                        8
+                    </button>
+
+                    <button onclick="press('9')">
+                        9
+                    </button>
+
+                    <button
+                        class="operator"
+                        onclick="press('*')"
+                    >
+                        ×
+                    </button>
+
+
+                    <button onclick="press('4')">
+                        4
+                    </button>
+
+                    <button onclick="press('5')">
+                        5
+                    </button>
+
+                    <button onclick="press('6')">
+                        6
+                    </button>
+
+                    <button
+                        class="operator"
+                        onclick="press('-')"
+                    >
+                        −
+                    </button>
+
+
+                    <button onclick="press('1')">
+                        1
+                    </button>
+
+                    <button onclick="press('2')">
+                        2
+                    </button>
+
+                    <button onclick="press('3')">
+                        3
+                    </button>
+
+                    <button
+                        class="operator"
+                        onclick="press('+')"
+                    >
+                        +
+                    </button>
+
+
+                    <button onclick="press('0')">
+                        0
+                    </button>
+
+                    <button onclick="press('.')">
+                        .
+                    </button>
+
+                    <button
+                        class="equal"
+                        style="grid-column: span 2;"
+                        onclick="calculate()"
+                    >
+                        =
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- Business Calculator -->
+
+            <div class="calculator-card">
+
+                <h2>💰 Profit Calculator</h2>
+
+                <div class="business-form">
+
+                    <input
+                        type="number"
+                        id="revenue"
+                        placeholder="Revenue ₹"
+                    >
+
+                    <input
+                        type="number"
+                        id="cost"
+                        placeholder="Total Cost ₹"
+                    >
+
+                    <button
+                        class="calculate-btn"
+                        onclick="calculateProfit()"
+                    >
+                        Calculate Profit
+                    </button>
+
+                </div>
+
+
+                <div
+                    id="profitResult"
+                    class="result hidden"
+                >
+
+                    <h3 id="profitValue">
+                        ₹0
+                    </h3>
+
+                    <p id="profitText">
+                        Net Profit
+                    </p>
+
+                </div>
+
+
+                <div class="percentage-result">
+
+                    <p>
+                        Quick Example
+                    </p>
+
+                    <br>
+
+                    <strong>
+                        20% of ₹10,000 = ₹2,000
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <script>
+
+        let expression = "";
+
+
+        function press(value) {
+
+            if (expression === "Error") {
+                expression = "";
+            }
+
+            expression += value;
+
+            document.getElementById(
+                "display"
+            ).value = expression;
+
+        }
+
+
+        function clearCalculator() {
+
+            expression = "";
+
+            document.getElementById(
+                "display"
+            ).value = "0";
+
+        }
+
+
+        function backspace() {
+
+            expression =
+                expression.slice(0, -1);
+
+            document.getElementById(
+                "display"
+            ).value =
+                expression || "0";
+
+        }
+
+
+        function calculate() {
+
+            if (!expression) {
+                return;
+            }
+
+            try {
+
+                const result =
+                    Function(
+                        "return " + expression
+                    )();
+
+                expression =
+                    String(result);
+
+                document.getElementById(
+                    "display"
+                ).value = result;
+
+            } catch (error) {
+
+                expression = "Error";
+
+                document.getElementById(
+                    "display"
+                ).value = "Error";
+
+            }
+
+        }
+
+
+        function calculateProfit() {
+
+            const revenue =
+                Number(
+                    document.getElementById(
+                        "revenue"
+                    ).value
+                );
+
+            const cost =
+                Number(
+                    document.getElementById(
+                        "cost"
+                    ).value
+                );
+
+
+            if (
+                isNaN(revenue) ||
+                isNaN(cost) ||
+                revenue < 0 ||
+                cost < 0
+            ) {
+
+                alert(
+                    "Please enter valid amounts."
+                );
+
+                return;
+
+            }
+
+
+            const profit =
+                revenue - cost;
+
+
+            const result =
+                document.getElementById(
+                    "profitResult"
+                );
+
+            const value =
+                document.getElementById(
+                    "profitValue"
+                );
+
+            const text =
+                document.getElementById(
+                    "profitText"
+                );
+
+
+            result.classList.remove(
+                "hidden"
+            );
+
+
+            value.textContent =
+                "₹" + Math.abs(profit);
+
+
+            if (profit > 0) {
+
+                text.textContent =
+                    "🎉 Net Profit";
+
+                value.style.color =
+                    "#16a34a";
+
+            } else if (profit < 0) {
+
+                text.textContent =
+                    "⚠️ Net Loss";
+
+                value.style.color =
+                    "#dc2626";
+
+            } else {
+
+                text.textContent =
+                    "Break Even";
+
+                value.style.color =
+                    "#2563eb";
+
+            }
+
+        }
+
+    </script>
+
+</body>
+
+</html>
