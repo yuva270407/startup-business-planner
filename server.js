@@ -26,15 +26,6 @@ app.use(express.static(path.join(__dirname, "frontend")));
 app.use(cors());
 app.use(express.json());
 
-app.use(express.static(path.join(__dirname, "frontend")));
-
-const ai = new GoogleGenAI({
-    apiKey: process.env.GEMINI_API_KEY
-});
-
-app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "frontend", "index.html"));
-});
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "frontend", "index.html"));
 });
