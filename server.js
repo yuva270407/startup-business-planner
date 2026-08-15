@@ -32,10 +32,6 @@ const ai = new GoogleGenAI({
     apiKey: process.env.GEMINI_API_KEY
 });
 
-app.get("/", (req, res) => {
-    res.send("Startup Business Planner Backend is Running!");
-});
-
 app.post("/api/business-plan", async (req, res) => {
 
     try {
